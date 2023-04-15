@@ -23,6 +23,9 @@ The tests for this program can be executed using the following command:
 `python3 -m unittest test_data_transform.py`
 
 The test suite includes the following test cases:
+
 test_valid_input_file_and_output_file: Verifies that the program correctly processes a valid input file and produces the expected output file.
+
 test_invalid_input_file: Tests the program's behavior when provided with an invalid JSON input file, ensuring that it produces an error message and exits.
+
 test_missing_fields_in_json_objects: Checks the program's ability to handle JSON objects with missing fields, ensuring that it can still process the data and generate the correct output.
