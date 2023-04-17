@@ -7,8 +7,8 @@ import sys
 def parse_arguments():
     # Set up argument parser and add arguments
     parser = argparse.ArgumentParser(description='Transform JSON data to CSV.')
-    parser.add_argument('--inputfile', type=str, required=True, help='The JSON input file.')
-    parser.add_argument('--outputfile', type=str, required=True, help='The CSV output file.')
+    parser.add_argument('--inputFile', type=str, required=True, help='The JSON input file.')
+    parser.add_argument('--outputFile', type=str, required=True, help='The CSV output file.')
     parser.add_argument('--fields', type=str, required=True, nargs='+', help='Whitespace-separated list of fields to extract.')
 
     # Parse arguments and return the results
@@ -59,11 +59,11 @@ def main():
     args = parse_arguments()
 
     # Read the JSON input file
-    with open(args.inputfile, 'r') as input_file:
+    with open(args.inputFile, 'r') as input_file:
         try:
             json_data = json.load(input_file)
         except json.JSONDecodeError:
-            print(f"Error: Invalid JSON file: {args.inputfile}", file=sys.stderr)
+            print(f"Error: Invalid JSON file: {args.inputFile}", file=sys.stderr)
             sys.exit(1)
 
     # Get the fields from command line arguments
@@ -73,7 +73,7 @@ def main():
     flat_data = flatten_json(json_data, fields)
 
     # Write the flattened data to the CSV output file
-    with open(args.outputfile, 'w') as output_file:
+    with open(args.outputFile, 'w') as output_file:
         writer = csv.DictWriter(output_file, fieldnames=fields)
         writer.writeheader()
         writer.writerows(flat_data)
