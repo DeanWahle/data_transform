@@ -7,7 +7,7 @@ Python 3.6 or later
 ## Usage
 Run the data transformation script using the following command:
 
-`python3 data_transform.py --inputfile INPUTFILE --outputfile OUTPUTFILE --fields FIELDS [FIELDS ...]`
+`python3 data_transform.py --inputFile INPUTFILE --outputFile OUTPUTFILE --fields FIELDS [FIELDS ...]`
 
 ### Where:
 
