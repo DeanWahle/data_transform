@@ -102,12 +102,17 @@ class TestDataTransform(unittest.TestCase):
 
     def tearDown(self):
         # Delete the output files after each test
+        os.remove(self.test_input_file)
         os.remove(self.valid_output_file)
+        os.remove(self.invalid_input_file)
+        os.remove(self.missing_fields_input_file)
+        os.remove(self.empty_input_file)
         os.remove(self.existing_output_file)
+
 
     def test_valid_input_file_and_output_file(self):
         # Test with valid input file and output file
-        subprocess.run(["python3", "data_transform.py", "--inputFile", self.missing_fields_input_file, "--outputFile", "output.csv", "--fields", *self.fields], check=True)
+        subprocess.run(["python3", "data_transform.py", "--inputFile", self.missing_fields_input_file, "--outputFile", "test_output.csv", "--fields", *self.fields], check=True)
         with open(self.valid_output_file) as f:
             reader = csv.DictReader(f)
             rows = list(reader)
@@ -116,13 +121,13 @@ class TestDataTransform(unittest.TestCase):
 
     def test_invalid_input_file(self):
         # Test with invalid input file
-        result = subprocess.run(["python3", "data_transform.py", "--inputFile", self.invalid_input_file, "--outputFile", "output.csv", "--fields", "modified", "publisher.name", "publisher.subOrganizationOf.name", "contactPoint.fn", "keyword"], capture_output=True, text=True)
+        result = subprocess.run(["python3", "data_transform.py", "--inputFile", self.invalid_input_file, "--outputFile", "test_output.csv", "--fields", "modified", "publisher.name", "publisher.subOrganizationOf.name", "contactPoint.fn", "keyword"], capture_output=True, text=True)
         self.assertIn("Error: Invalid JSON file:", result.stderr)
 
     def test_missing_fields_in_json_objects(self):
         # Test with missing fields in JSON objects
-        subprocess.run(["python3", "data_transform.py", "--inputFile", self.missing_fields_input_file, "--outputFile", "output.csv", "--fields", *self.fields], check=True)
-        with open("output.csv") as f:
+        subprocess.run(["python3", "data_transform.py", "--inputFile", self.missing_fields_input_file, "--outputFile", "test_output.csv", "--fields", *self.fields], check=True)
+        with open("test_output.csv") as f:
             reader = csv.DictReader(f)
             rows = list(reader)
         self.assertEqual(len(rows), 7)
